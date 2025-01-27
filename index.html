@@ -46,34 +46,52 @@
         <a-entity gltf-model="#my-model" position="0 1 -7"></a-entity>
     </a-scene>
 
-  <script>
-    // Логика сбора объектов
-    AFRAME.registerComponent('collectible', {
-        init: function () {
-            this.el.addEventListener('collide', (e) => {
-                if (e.detail.body.el.id === 'player') {
-                    this.el.setAttribute('visible', false); // Скрыть объект
-                    updateScore(); // Обновить счет
-                    respawnCollectible(this.el); // Переместить объект в случайное место
-                }
-            });
+    <script>
+        // Логика сбора объектов
+        AFRAME.registerComponent('collectible', {
+            init: function () {
+                this.el.addEventListener('collide', (e) => {
+                    if (e.detail.body.el.id === 'player') {
+                        this.el.setAttribute('visible', false); // Скрыть объект
+                        updateScore(); // Обновить счет
+                        respawnCollectible(this.el); // Переместить объект в случайное место
+                    }
+                });
+            }
+        });
+
+        let score = 0;
+
+        function updateScore() {
+            score += 1; // Увеличиваем счет на 1
+            document.querySelector('#scoreText').setAttribute('value', 'Score: ' + score); // Обновляем текст счета
         }
-    });
 
-    let score = 0;
+        function respawnCollectible(collectible) {
+            const x = (Math.random() - 0.5) * 20; // Генерируем случайную позицию x
+            const z = (Math.random() - 0.5) * 20; // Генерируем случайную позицию z
+            collectible.setAttribute('position', { x: x, y: 1, z: z }); // Устанавливаем новую позицию
+            collectible.setAttribute('visible', true); // Делаем объект видимым
+        }
 
-    function updateScore() {
-        score += 1; // Увеличиваем счет на 1
-        document.querySelector('#scoreText').setAttribute('value', 'Score: ' + score); // Обновляем текст счета
-    }
+        // Таймер
+        let timeLeft = 60;
+        let timerInterval = setInterval(() => {
+            timeLeft -= 1;
+            document.querySelector('#timerText').setAttribute('value', 'Time: ' + timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }, 1000);
 
-    function respawnCollectible(collectible) {
-        const x = (Math.random() - 0.5) * 20; // Генерируем случайную позицию x
-        const z = (Math.random() - 0.5) * 20; // Генерируем случайную позицию z
-        collectible.setAttribute('position', { x: x, y: 1, z: z }); // Устанавливаем новую позицию
-        collectible.setAttribute('visible', true); // Делаем объект видимым
-    }
-</script>
-
+        function endGame() {
+            document.querySelector('#timerText').setAttribute('value', 'Game Over! Final Score: ' + score);
+            // Логика для перезапуска игры через 3 секунды
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
