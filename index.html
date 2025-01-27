@@ -29,14 +29,24 @@
     </a-scene>
 
     <script>
+        // Регистрация компонента для сбора
         AFRAME.registerComponent('collectible', {
             init: function () {
-                this.el.addEventListener('collide', (e) => {
-                    if (e.detail.body.el.id === 'player') {
-                        updateScore(); // Обновить счет
-                        respawnCollectible(this.el); // Переместить объект в случайное место
-                    }
-                });
+                this.el.addEventListener('collide', this.onCollect.bind(this)); // Привязываем метод
+            },
+            onCollect: function (e) {
+                // Проверяем, является ли объект игроком
+                if (e.detail.body.el.id === 'player') {
+                    console.log('Collected:', this.el.id); // Логируем собранный объект
+                    updateScore(); // Обновить счет
+                    this.respawn(); // Переместить объект в случайное место
+                }
+            },
+            respawn: function () {
+                const x = (Math.random() - 0.5) * 20; // Генерируем случайную позицию x
+                const z = (Math.random() - 0.5) * 20; // Генерируем случайную позицию z
+                this.el.setAttribute('position', { x: x, y: 1.6, z: z }); // Устанавливаем новую позицию
+                console.log('Respawned at:', { x, y: 1.6, z }); // Логируем новое положение объекта
             }
         });
 
@@ -46,14 +56,6 @@
             score += 1; // Увеличиваем счет на 1
             document.querySelector('#scoreText').setAttribute('value', 'Score: ' + score); // Обновляем текст счета
             console.log('Score updated:', score); // Логируем обновление счета для отладки
-        }
-
-        function respawnCollectible(collectible) {
-            const x = (Math.random() - 0.5) * 20; // Генерируем случайную позицию x
-            const z = (Math.random() - 0.5) * 20; // Генерируем случайную позицию z
-            collectible.setAttribute('position', { x: x, y: 1.6, z: z }); // Устанавливаем новую позицию на уровне камеры
-            collectible.setAttribute('visible', true); // Делаем объект видимым
-            console.log('Collectible respawned at:', { x, y: 1.6, z }); // Логируем новое положение объекта для отладки
         }
     </script>
 </body>
