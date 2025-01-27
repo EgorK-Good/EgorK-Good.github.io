@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <title>VR Mini Game</title>
@@ -9,10 +9,10 @@
 <body>
     <a-scene physics="debug: true">
         <!-- Небо -->
-        <a-sky color="#ECECEC"></a-sky>
+        <a-sky src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"></a-sky>
 
         <!-- Пол -->
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/ground.jpg" static-body></a-plane>
 
         <!-- Камера и контроллер -->
         <a-entity camera look-controls position="0 1.6 0" id="player" dynamic-body wasd-controls></a-entity>
@@ -27,6 +27,20 @@
 
         <!-- Таймер -->
         <a-text id="timerText" value="Time: 60" position="1.5 2.5 -5" color="black"></a-text>
+
+        <!-- Сообщение о завершении игры -->
+        <a-entity id="gameOverText" visible="false">
+            <a-text value="" position="-1 2 -4" color="#FF0000"></a-text>
+            <a-entity geometry="primitive: plane; width: 2; height: 1;" material="color: #FFFFFF; opacity: 0.7"
+                      position="-1 1 -4"></a-entity>
+        </a-entity>
+
+        <!-- Загрузка 3D модели -->
+        <a-assets>
+            <a-asset-item id="myModel" src="path/to/your/model.glb"></a-asset-item> <!-- Замените на путь к вашей модели -->
+        </a-assets>
+        
+        <a-entity gltf-model="#myModel" position="-2 0 -6"></a-entity> <!-- Позиция вашей модели -->
     </a-scene>
 
     <script>
@@ -37,6 +51,7 @@
         // Получаем элементы текста
         const scoreText = document.getElementById('scoreText');
         const timerText = document.getElementById('timerText');
+        const gameOverText = document.getElementById('gameOverText');
 
         // Функция обновления счета
         function updateScore() {
@@ -51,8 +66,16 @@
                 timerText.setAttribute('value', 'Time: ' + timeLeft);
             } else {
                 clearInterval(timerInterval);
-                alert('Время вышло! Ваш итоговый счет: ' + score);
+                endGame();
             }
+        }
+
+        // Завершение игры
+        function endGame() {
+            gameOverText.setAttribute('visible', true);
+            gameOverText.firstChild.setAttribute('value', 'Игра окончена! Ваш счет: ' + score);
+            // Дополнительный код для перезапуска игры можно добавить здесь
+            document.querySelectorAll('.collectible').forEach((item) => item.remove()); // Удаляем объекты
         }
 
         // Создание компонента для обработки столкновений
