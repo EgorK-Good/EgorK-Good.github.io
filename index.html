@@ -4,22 +4,23 @@
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-system@3.5.0/dist/aframe-physics-system.min.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene physics="debug: true">
         <!-- Небо -->
         <a-sky color="#ECECEC"></a-sky>
 
         <!-- Пол -->
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
 
         <!-- Камера и контроллер -->
-        <a-entity camera look-controls position="0 1.6 0" id="player"></a-entity>
+        <a-entity camera look-controls position="0 1.6 0" id="player" dynamic-body></a-entity>
 
         <!-- Объекты для сбора -->
-        <a-box position="-1 0.5 -3" rotation="0 45 45" color="#4CC3D9" class="collectible"></a-box>
-        <a-sphere position="1 1.25 -5" radius="1.25" color="#EF2D5E" class="collectible"></a-sphere>
-        <a-cylinder position="0 0.75 -5" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-box position="-1 0.5 -3" rotation="0 45 45" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+        <a-sphere position="1 1.25 -5" radius="1.25" color="#EF2D5E" class="collectible" dynamic-body></a-sphere>
+        <a-cylinder position="0 0.75 -5" radius="0.5" height="1.5" color="#FFC65D" class="collectible" dynamic-body></a-cylinder>
 
         <!-- Текст для отображения счета -->
         <a-text id="scoreText" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
