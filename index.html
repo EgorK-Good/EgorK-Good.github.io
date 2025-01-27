@@ -35,6 +35,11 @@
         <a-torus id="collectible4" position="3 1 -7" radius="0.5" radius-tubular="0.2" color="#7D3C98" dynamic-body collectible></a-torus>
         <a-ring id="collectible5" position="-3 1 -7" radius-inner="0.2" radius-outer="0.5" color="#F7DC6F" dynamic-body collectible></a-ring>
 
+        <!-- Новые объекты для сбора -->
+        <a-sphere id="collectible6" position="4 1 -5" radius="0.5" color="#F39C12" dynamic-body collectible></a-sphere>
+        <a-sphere id="collectible7" position="-4 1 -5" radius="0.5" color="#2ECC71" dynamic-body collectible></a-sphere>
+        <a-box id="collectible8" position="-1 1 -8" width="1" height="1" depth="1" color="#3498DB" dynamic-body collectible></a-box>
+
         <!-- Текст счета в центре -->
         <a-text id="scoreText" value="Score: 0" position="-2 2 -5"></a-text>
 
@@ -50,6 +55,7 @@
         AFRAME.registerComponent('collectible', {
             init: function () {
                 this.el.addEventListener('collide', (e) => {
+                    // Проверяем, является ли объект игроком
                     if (e.detail.body.el.id === 'player') {
                         this.el.setAttribute('visible', false); // Скрыть объект
                         updateScore(); // Обновить счет
@@ -64,6 +70,7 @@
         function updateScore() {
             score += 1; // Увеличиваем счет на 1
             document.querySelector('#scoreText').setAttribute('value', 'Score: ' + score); // Обновляем текст счета
+            console.log('Score updated:', score); // Логируем обновление счета для отладки
         }
 
         function respawnCollectible(collectible) {
@@ -71,6 +78,7 @@
             const z = (Math.random() - 0.5) * 20; // Генерируем случайную позицию z
             collectible.setAttribute('position', { x: x, y: 1, z: z }); // Устанавливаем новую позицию
             collectible.setAttribute('visible', true); // Делаем объект видимым
+            console.log('Collectible respawned at:', { x, y: 1, z }); // Логируем новое положение объекта для отладки
         }
 
         // Таймер
