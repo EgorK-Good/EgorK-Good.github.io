@@ -56,8 +56,9 @@
             init: function () {
                 this.el.addEventListener('collide', (e) => {
                     if (e.detail.body.el.id === 'player') {
-                        respawnCollectible(this.el); // Переместить объект в случайное место
+                        this.el.setAttribute('visible', false); // Скрыть объект
                         updateScore(); // Обновить счет
+                        respawnCollectible(this.el); // Переместить объект в случайное место
                     }
                 });
             }
