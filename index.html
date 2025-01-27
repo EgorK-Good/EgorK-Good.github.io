@@ -100,7 +100,6 @@
 
         function endGame() {
             document.querySelector('#timerText').setAttribute('value', 'Game Over! Final Score: ' + score);
-            // Логика для перезапуска игры через 3 секунды
             setTimeout(() => {
                 location.reload();
             }, 3000);
