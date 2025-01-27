@@ -55,6 +55,15 @@
                         this.el.setAttribute('visible', false); // Скрыть объект
                         updateScore(); // Обновить счет
                         respawnCollectible(this.el); // Переместить объект в случайное место
+                        // Добавьте эффект при сборе
+                        const effect = document.createElement('a-animation');
+                        effect.setAttribute('attribute', 'scale');
+                        effect.setAttribute('from', '1 1 1');
+                        effect.setAttribute('to', '2 2 2');
+                        effect.setAttribute('dur', '500');
+                        effect.setAttribute('direction', 'alternate');
+                        effect.setAttribute('repeat', 'indefinite');
+                        this.el.appendChild(effect);
                     }
                 });
             }
