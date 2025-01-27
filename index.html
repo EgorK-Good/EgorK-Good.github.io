@@ -18,6 +18,8 @@
         <a-assets>
             <img id="sky" src="sky.png">
             <img id="ground" src="ret.png">
+            <!-- Замените URL на путь к вашей 3D модели -->
+            <a-asset-item id="my-model" src="https://example.com/path/to/your/model.glb"></a-asset-item>
         </a-assets>
         <a-sky src="#sky"></a-sky>
         <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#7BC8A4" src="#ground" static-body></a-plane>
@@ -41,8 +43,7 @@
         <a-text id="timerText" value="Time: 60" position="1 2.5 -3" color="#000"></a-text>
 
         <!-- 3D модель -->
-        <!-- Замените URL на путь к вашей 3D модели -->
-        <a-entity gltf-model="url(https://example.com/path/to/your/model.glb)" position="0 1 -7"></a-entity>
+        <a-entity gltf-model="#my-model" position="0 1 -7"></a-entity>
     </a-scene>
 
     <script>
