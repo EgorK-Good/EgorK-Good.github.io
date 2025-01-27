@@ -18,7 +18,6 @@
         <a-assets>
             <img id="sky" src="sky.png">
             <img id="ground" src="ret.png">
-            <!-- Замените URL на путь к вашей 3D модели -->
             <a-asset-item id="my-model" src="https://example.com/path/to/your/model.glb"></a-asset-item>
         </a-assets>
         <a-sky src="#sky"></a-sky>
@@ -36,11 +35,16 @@
         <a-torus id="collectible4" position="3 1 -7" radius="0.5" radius-tubular="0.2" color="#7D3C98" dynamic-body collectible></a-torus>
         <a-ring id="collectible5" position="-3 1 -7" radius-inner="0.2" radius-outer="0.5" color="#F7DC6F" dynamic-body collectible></a-ring>
 
+        <!-- Новые объекты для сбора -->
+        <a-sphere id="collectible6" position="4 1 -5" radius="0.5" color="#F39C12" dynamic-body collectible></a-sphere>
+        <a-sphere id="collectible7" position="-4 1 -5" radius="0.5" color="#2ECC71" dynamic-body collectible></a-sphere>
+        <a-box id="collectible8" position="-1 1 -8" width="1" height="1" depth="1" color="#3498DB" dynamic-body collectible></a-box>
+
         <!-- Текст счета в центре -->
-        <a-text id="scoreText" value="Score: 0" position="-1 2 -5" color="#000"></a-text>
+        <a-text id="scoreText" value="Score: 0" position="-1 2 -5"></a-text>
 
         <!-- Таймер -->
-        <a-text id="timerText" value="Time: 60" position="1 2 -5" color="#000"></a-text>
+        <a-text id="timerText" value="Time: 60" position="1 2 -5"></a-text>
 
         <!-- 3D модель -->
         <a-entity gltf-model="#my-model" position="0 1 -7"></a-entity>
