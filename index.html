@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>VR Mini Game</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-physics-system@3.5.0/dist/aframe-physics-system.min.js"></script>
 </head>
 <body>
     <a-scene physics="debug: true">
         <!-- Небо -->
-        <a-sky src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"></a-sky>
+        <a-sky src="sky.png"></a-sky>
 
         <!-- Пол -->
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/ground.jpg" static-body></a-plane>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" src="ret.png" static-body></a-plane>
 
         <!-- Камера и контроллер -->
         <a-entity camera look-controls position="0 1.6 0" id="player" dynamic-body wasd-controls></a-entity>
@@ -36,9 +36,6 @@
         </a-entity>
 
         <!-- Загрузка 3D модели -->
-        <a-assets>
-            <a-asset-item id="myModel" src="path/to/your/model.glb"></a-asset-item> <!-- Замените на путь к вашей модели -->
-        </a-assets>
 
         <a-entity gltf-model="#myModel" position="-2 0 -6"></a-entity> <!-- Позиция вашей модели -->
     </a-scene>
