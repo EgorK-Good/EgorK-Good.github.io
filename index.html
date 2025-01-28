@@ -141,6 +141,36 @@
                 });
             }
         });
+
+        // Компонент для обработки кликов по объектам
+        AFRAME.registerComponent('click-handler', {
+            init: function () {
+                const leftHand = document.querySelector('#lefthand');
+                const rightHand = document.querySelector('#righthand');
+
+                leftHand.addEventListener('triggerdown', () => {
+                    const intersectedElement = leftHand.components.raycaster.getIntersectedEls()[0];
+                    if (intersectedElement && intersectedElement.classList.contains('collectible')) {
+                        updateScore();
+                        intersectedElement.parentNode.removeChild(intersectedElement);
+                    }
+                });
+
+                rightHand.addEventListener('triggerdown', () => {
+                    const intersectedElement = rightHand.components.raycaster.getIntersectedEls()[0];
+                    if (intersectedElement && intersectedElement.classList.contains('collectible')) {
+                        updateScore();
+                        intersectedElement.parentNode.removeChild(intersectedElement);
+                    }
+                });
+            }
+        });
+
+        // Применяем компонент click-handler к контроллерам
+        const leftHand = document.querySelector('#lefthand');
+        const rightHand = document.querySelector('#righthand');
+        leftHand.setAttribute('click-handler', '');
+        rightHand.setAttribute('click-handler', '');
     </script>
 </body>
 </html>
