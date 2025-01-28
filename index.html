@@ -68,7 +68,7 @@
         // Завершение игры
         function endGame() {
             gameOverText.setAttribute('visible', true);
-            gameOverMessage.setAttribute('value', 'Игра окончена! Ваш счет: ' + score);
+            gameOverMessage.setAttribute('value', 'GaMe OVER ! your game score: ' + score);
             // Дополнительный код для перезапуска игры можно добавить здесь
             document.querySelectorAll('.collectible').forEach((item) => item.remove()); // Удаляем объекты
         }
