@@ -12,14 +12,14 @@
         <a-sky src="sky.png"></a-sky>
 
         <!-- Пол -->
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" src="ret.png" static-body></a-plane>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="100" src="ret.png" static-body></a-plane>
 
         <!-- Камера и контроллер -->
         <a-entity camera look-controls position="0 1.6 0" id="player" dynamic-body wasd-controls></a-entity>
 
         <!-- Объекты для сбора -->
-        <a-box position="-1 0.5 -3" rotation="0 45 45" color="#4CC3D9" class="collectible" dynamic-body></a-box>
-        <a-sphere position="1 1.25 -5" radius="1.25" color="#EF2D5E" class="collectible" dynamic-body></a-sphere>
+        <a-box position="-10 0.5 -3" rotation="0 45 45" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+        <a-sphere position="5 1.25 -5" radius="1.25" color="#EF2D5E" class="collectible" dynamic-body></a-sphere>
         <a-cylinder position="0 0.75 -5" radius="0.5" height="1.5" color="#FFC65D" class="collectible" dynamic-body></a-cylinder>
 
         <!-- Текст для отображения счета -->
