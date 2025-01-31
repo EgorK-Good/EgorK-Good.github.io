@@ -1,172 +1,167 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-physics-system@3.5.0/dist/aframe-physics-system.min.js"></script>
-</head>
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
+  </head>
+  <body>
     <a-scene physics="debug: true">
-        <!-- Небо -->
-        <a-sky src="sky.png"></a-sky>
+      <a-sky src="sky.jpg"></a-sky>
 
-        <!-- Пол -->
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="50" height="50" src="ret.png" static-body></a-plane>
+      <!-- Пол с физикой -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src="ret.jpg" static-body></a-plane>
 
-        <!-- Камера и контроллер -->
-        <a-entity id="rig" position="0 1.6 0" movement-controls>
-            <a-entity camera look-controls></a-entity>
-        </a-entity>
+      <!-- Камера и контроллер -->
+      <a-entity id="rig" position="0 1.6 0" movement-controls>
+        <a-entity camera look-controls></a-entity>
+      </a-entity>
 
-        <!-- Левый контроллер -->
-        <a-entity id="lefthand"
-                  raycaster="objects: .collectible"
-                  haptics="dur: 40">
-        </a-entity>
+      <!-- Левый контроллер -->
+      <a-entity id="lefthand"
+                raycaster="objects: .collectible"
+                haptics="dur: 40">
+      </a-entity>
 
-        <!-- Правый контроллер -->
-        <a-entity id="righthand"
-                  raycaster="objects: .collectible"
-                  haptics="dur: 40">
-        </a-entity>
+      <!-- Правый контроллер -->
+      <a-entity id="righthand"
+                raycaster="objects: .collectible"
+                haptics="dur: 40">
+      </a-entity>
 
-        <!-- Объекты для сбора -->
-        <a-box position="-10 0.5 -3" rotation="0 45 45" color="#4CC3D9" class="collectible" dynamic-body></a-box>
-        <a-sphere position="5 1.25 -5" radius="1.25" color="#EF2D5E" class="collectible" dynamic-body></a-sphere>
-        <a-cylinder position="0 0.75 -5" radius="0.5" height="1.5" color="#FFC65D" class="collectible" dynamic-body></a-cylinder>
+      <!-- Объекты для сбора с физикой -->
+      <a-box position="-6 5 -3" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+      <a-box position="5 5 -2" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+      <a-box position="-7 5 -1" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+      <a-box position="8 5 -3" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+      <a-box position="-1 5 -3" color="#4CC3D9" class="collectible" dynamic-body></a-box>
+      <a-box position="-2 5 -4" color="#4CC3D9" class="collectible" dynamic-body></a-box>
 
-        <!-- Текст для отображения счета -->
-        <a-text id="scoreText" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
+      <!-- Текст для отображения счета -->
+      <a-text id="score" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
 
-        <!-- Таймер -->
-        <a-text id="timerText" value="Time: 20" position="1.5 2.5 -5" color="black"></a-text>
+      <!-- Таймер -->
+      <a-text id="timer" value="Time: 30" position="1.5 2.5 -5" color="black"></a-text>
 
-        <!-- Сообщение о завершении игры -->
-        <a-entity id="gameOverText" visible="false">
-            <a-text id="gameOverMessage" value="GaMe OVER ! your game score: 0" position="-1 4 -4" color="#FF0000"></a-text>
-        </a-entity>
-
-        <!-- Загрузка 3D модели -->
-
+      <!-- Текст для окончания игры -->
+      <a-text id="gameOverText" value="" position="-1 4 -4" color="black"></a-text>
     </a-scene>
 
     <script>
-        // Переменные для счета и таймера
-        let score = 0;
-        let timeLeft = 20;
+      // Переменные для счета и таймера
+      let score = 0;
+      let timeLeft = 30;
 
-        // Получаем элементы текста
-        const scoreText = document.getElementById('scoreText');
-        const timerText = document.getElementById('timerText');
-        const gameOverText = document.getElementById('gameOverText');
-        const gameOverMessage = document.getElementById('gameOverMessage');
+      // Получаем элементы текста
+      const scoreText = document.getElementById('score');
+      const timerText = document.getElementById('timer');
+      const gameOverText = document.getElementById('gameOverText');
 
-        // Функция обновления счета
-        function updateScore() {
-            score++;
-            scoreText.setAttribute('value', 'Score: ' + score);
+      // Функция обновления счета
+      function updateScore() {
+        score++;
+        scoreText.setAttribute('value', 'Score: ' + score);
+      }
+
+      // Функция обновления таймера
+      function updateTimer() {
+        if (timeLeft > 0) {
+          timeLeft--;
+          timerText.setAttribute('value', 'Time: ' + timeLeft);
+        } else {
+          clearInterval(timerInterval);
+          endGame();
         }
+      }
 
-        // Функция обновления таймера
-        function updateTimer() {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timerText.setAttribute('value', 'Time: ' + timeLeft);
-            } else {
-                clearInterval(timerInterval);
-                endGame();
+      // Завершение игры
+      function endGame() {
+        gameOverText.setAttribute('value', 'Game Over! Your final score is: ' + score);
+        // Дополнительный код для перезапуска игры можно добавить здесь
+        document.querySelectorAll('.collectible').forEach((item) => item.remove()); // Удаляем объекты
+      }
+
+      // Создание компонента для обработки столкновений
+      AFRAME.registerComponent('collidable', {
+        init: function () {
+          this.el.addEventListener('collide', (event) => {
+            if (event.detail.body.el.id === 'rig') {
+              // Увеличиваем счет и убираем объект
+              updateScore();
+              this.el.parentNode.removeChild(this.el); // Удаляем объект из сцены
             }
+          });
         }
+      });
 
-        // Завершение игры
-        function endGame() {
-            gameOverText.setAttribute('visible', true);
-            gameOverMessage.setAttribute('value', 'GaMe OVER ! your game score: ' + score);
-            // Дополнительный код для перезапуска игры можно добавить здесь
-            document.querySelectorAll('.collectible').forEach((item) => item.remove()); // Удаляем объекты
+      // Устанавливаем обработчики событий для объектов
+      const collectibles = document.querySelectorAll('.collectible');
+      collectibles.forEach(item => {
+        item.setAttribute('collidable', ''); // Добавляем компонент столкновения
+      });
+
+      // Запускаем таймер
+      const timerInterval = setInterval(updateTimer, 1000);
+
+      // Компонент для управления передвижением с помощью стик-контроллеров
+      AFRAME.registerComponent('movement-controls', {
+        init: function () {
+          const rig = this.el;
+          const leftHand = document.querySelector('#lefthand');
+          const rightHand = document.querySelector('#righthand');
+
+          leftHand.addEventListener('thumbstickmoved', (evt) => {
+            const direction = evt.detail.axis;
+            const position = rig.getAttribute('position');
+            rig.setAttribute('position', {
+              x: position.x + direction[0] * 0.1,
+              y: position.y,
+              z: position.z + direction[1] * 0.1
+            });
+          });
+
+          rightHand.addEventListener('thumbstickmoved', (evt) => {
+            const direction = evt.detail.axis;
+            const position = rig.getAttribute('position');
+            rig.setAttribute('position', {
+              x: position.x + direction[0] * 0.1,
+              y: position.y,
+              z: position.z + direction[1] * 0.1
+            });
+          });
         }
+      });
 
-        // Создание компонента для обработки столкновений
-        AFRAME.registerComponent('collidable', {
-            init: function () {
-                this.el.addEventListener('collide', (event) => {
-                    if (event.detail.body.el.id === 'rig') {
-                        // Увеличиваем счет и убираем объект
-                        updateScore();
-                        this.el.parentNode.removeChild(this.el); // Удаляем объект из сцены
-                    }
-                });
+      // Компонент для обработки кликов по объектам
+      AFRAME.registerComponent('click-handler', {
+        init: function () {
+          const leftHand = document.querySelector('#lefthand');
+          const rightHand = document.querySelector('#righthand');
+
+          leftHand.addEventListener('triggerdown', () => {
+            const intersectedElement = leftHand.components.raycaster.getIntersectedEls()[0];
+            if (intersectedElement && intersectedElement.classList.contains('collectible')) {
+              updateScore();
+              intersectedElement.parentNode.removeChild(intersectedElement);
             }
-        });
+          });
 
-        // Устанавливаем обработчики событий для объектов
-        const collectibles = document.querySelectorAll('.collectible');
-        collectibles.forEach(item => {
-            item.setAttribute('collidable', ''); // Добавляем компонент столкновения
-        });
-
-        // Запускаем таймер
-        const timerInterval = setInterval(updateTimer, 1000);
-
-        // Компонент для управления передвижением с помощью стик-контроллеров
-        AFRAME.registerComponent('movement-controls', {
-            init: function () {
-                const rig = this.el;
-                const leftHand = document.querySelector('#lefthand');
-                const rightHand = document.querySelector('#righthand');
-
-                leftHand.addEventListener('thumbstickmoved', (evt) => {
-                    const direction = evt.detail.axis;
-                    const position = rig.getAttribute('position');
-                    rig.setAttribute('position', {
-                        x: position.x + direction[0] * 0.1,
-                        y: position.y,
-                        z: position.z + direction[1] * 0.1
-                    });
-                });
-
-                rightHand.addEventListener('thumbstickmoved', (evt) => {
-                    const direction = evt.detail.axis;
-                    const position = rig.getAttribute('position');
-                    rig.setAttribute('position', {
-                        x: position.x + direction[0] * 0.1,
-                        y: position.y,
-                        z: position.z + direction[1] * 0.1
-                    });
-                });
+          rightHand.addEventListener('triggerdown', () => {
+            const intersectedElement = rightHand.components.raycaster.getIntersectedEls()[0];
+            if (intersectedElement && intersectedElement.classList.contains('collectible')) {
+              updateScore();
+              intersectedElement.parentNode.removeChild(intersectedElement);
             }
-        });
+          });
+        }
+      });
 
-        // Компонент для обработки кликов по объектам
-        AFRAME.registerComponent('click-handler', {
-            init: function () {
-                const leftHand = document.querySelector('#lefthand');
-                const rightHand = document.querySelector('#righthand');
-
-                leftHand.addEventListener('triggerdown', () => {
-                    const intersectedElement = leftHand.components.raycaster.getIntersectedEls()[0];
-                    if (intersectedElement && intersectedElement.classList.contains('collectible')) {
-                        updateScore();
-                        intersectedElement.parentNode.removeChild(intersectedElement);
-                    }
-                });
-
-                rightHand.addEventListener('triggerdown', () => {
-                    const intersectedElement = rightHand.components.raycaster.getIntersectedEls()[0];
-                    if (intersectedElement && intersectedElement.classList.contains('collectible')) {
-                        updateScore();
-                        intersectedElement.parentNode.removeChild(intersectedElement);
-                    }
-                });
-            }
-        });
-
-        // Применяем компонент click-handler к контроллерам
-        const leftHand = document.querySelector('#lefthand');
-        const rightHand = document.querySelector('#righthand');
-        leftHand.setAttribute('click-handler', '');
-        rightHand.setAttribute('click-handler', '');
+      // Применяем компонент click-handler к контроллерам
+      const leftHand = document.querySelector('#lefthand');
+      const rightHand = document.querySelector('#righthand');
+      leftHand.setAttribute('click-handler', '');
+      rightHand.setAttribute('click-handler', '');
     </script>
-</body>
+  </body>
 </html>
