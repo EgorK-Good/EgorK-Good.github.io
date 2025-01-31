@@ -4,16 +4,15 @@
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
 
-    <a-scene physics="debug: true; gravity: -9.8">
+    <a-scene>
 
       <a-sky src="sky.png"></a-sky>
 
-      <!-- Пол с физикой -->
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src="ret.png" static-body></a-plane>
+      <!-- Пол -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src="ret.png"></a-plane>
 
       <!-- Камера и контроллер -->
       <a-entity camera look-controls wasd-controls position="0 1.6 0">
@@ -22,13 +21,13 @@
       <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
       <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
 
-      <!-- Объекты для сбора с физикой -->
-      <a-box position="-6 5 -3" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
-      <a-box position="5 5 -2" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
-      <a-box position="-7 5 -1" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
-      <a-box position="8 5 -3" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
-      <a-box position="-1 5 -3" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
-      <a-box position="-2 5 -4" color="#4CC3D9" collectible dynamic-body="mass: 10"></a-box>
+      <!-- Объекты для сбора -->
+      <a-box position="-6 5 -3" color="#4CC3D9" collectible falling></a-box>
+      <a-box position="5 5 -2" color="#4CC3D9" collectible falling></a-box>
+      <a-box position="-7 5 -1" color="#4CC3D9" collectible falling></a-box>
+      <a-box position="8 5 -3" color="#4CC3D9" collectible falling></a-box>
+      <a-box position="-1 5 -3" color="#4CC3D9" collectible falling></a-box>
+      <a-box position="-2 5 -4" color="#4CC3D9" collectible falling></a-box>
 
       <!-- Текст для отображения счета -->
       <a-text id="score" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
@@ -54,6 +53,20 @@
                     let score = parseInt(scoreElement.getAttribute('value').split(': ')[1]) + 1;
                     scoreElement.setAttribute('value', 'Score: ' + score);
                 });
+            }
+        });
+
+        // Логика падения объектов
+        AFRAME.registerComponent('falling', {
+            tick: function (time, timeDelta) {
+                // Получение текущей позиции объекта
+                let position = this.el.getAttribute('position');
+
+                // Обновление позиции объекта под действием гравитации
+                position.y -= 0.01 * timeDelta;
+
+                // Установка новой позиции объекта
+                this.el.setAttribute('position', position);
             }
         });
 
