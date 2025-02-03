@@ -4,18 +4,20 @@
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ammo.js@0.0.1/builds/ammo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-particle-system-component@1.0.2/dist/aframe-particle-system-component.min.js"></script>
   </head>
   <body>
 
-    <a-scene physics="debug: true; gravity: -9.8">
+    <a-scene>
+      <!-- Освещение -->
+      <a-light type="ambient" color="#bbb"></a-light>
+      <a-light type="directional" color="#fff" intensity="0.6" position="-1 1 0"></a-light>
 
-      <a-sky src="sky.png"></a-sky>
+      <!-- Небо -->
+      <a-sky src=sky.png></a-sky>
 
-      <!-- Пол с физикой -->
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src="ret.png" static-body></a-plane>
+      <!-- Пол с текстурой -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src=ret.png" shadow="receive: true"></a-plane>
 
       <!-- Камера и контроллер -->
       <a-entity camera look-controls wasd-controls position="0 1.6 0">
@@ -24,13 +26,13 @@
       <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
       <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
 
-      <!-- Объекты для сбора с физикой -->
-      <a-box position="-6 5 -3" color="#FFD700" collectible dynamic-body="shape: box; mass: 10"></a-box>
-      <a-box position="5 5 -2" color="#4CC3D9" collectible dynamic-body="shape: box; mass: 10"></a-box>
-      <a-box position="-7 5 -1" color="#4CC3D9" collectible dynamic-body="shape: box; mass: 10"></a-box>
-      <a-box position="8 5 -3" color="#4CC3D9" collectible dynamic-body="shape: box; mass: 10"></a-box>
-      <a-box position="-1 5 -3" color="#4CC3D9" collectible dynamic-body="shape: box; mass: 10"></a-box>
-      <a-box position="-2 5 -4" color="#4CC3D9" collectible dynamic-body="shape: box; mass: 10"></a-box>
+      <!-- Объекты для сбора с текстурами -->
+      <a-box position="-6 1 -3" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
+      <a-box position="5 1 -2" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
+      <a-box position="-7 1 -1" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
+      <a-box position="8 1 -3" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
+      <a-box position="-1 1 -3" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
+      <a-box position="-2 1 -4" width="1" height="1" depth="1" src="https://aframe.io/aframe/examples/test/textures/brick.jpg" collectible shadow="cast: true"></a-box>
 
       <!-- Текст для отображения счета -->
       <a-text id="score" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
@@ -41,6 +43,8 @@
       <!-- Текст для окончания игры -->
       <a-text id="gameOverText" value="" position="-1 4 -4" color="black"></a-text>
 
+      <!-- Звук при сборе объекта -->
+      <a-sound id="collectSound" src="https://cdn.aframe.io/examples/sounds/click.ogg" autoplay="false"></a-sound>
     </a-scene>
 
     <script>
@@ -74,6 +78,10 @@
                     let scoreElement = document.querySelector('#score');
                     let score = parseInt(scoreElement.getAttribute('value').split(': ')[1]) + 1;
                     scoreElement.setAttribute('value', 'Score: ' + score);
+
+                    // Воспроизведение звука
+                    const sound = document.querySelector('#collectSound');
+                    sound.components.sound.playSound();
                 });
             }
         });
