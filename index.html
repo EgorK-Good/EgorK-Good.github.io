@@ -54,13 +54,15 @@
                     // Создание частиц разрушения
                     const particles = document.createElement('a-entity');
                     particles.setAttribute('particle-system', {
-                        preset: 'dust',
+                        preset: 'custom',
                         particleCount: 100,
                         color: '#4CC3D9',
                         duration: 1,
                         size: 0.1,
                         velocityValue: '0 5 0',
-                        positionSpread: '0.5 0.5 0.5'
+                        velocitySpread: '5 5 5',
+                        positionSpread: '0.5 0.5 0.5',
+                        texture: 'url(https://aframe.io/aframe/examples/boilerplate/particles/particle.png)'
                     });
                     particles.setAttribute('position', position);
                     this.el.parentNode.appendChild(particles);
@@ -101,6 +103,3 @@
     </script>
   </body>
 </html>
-
-
-
