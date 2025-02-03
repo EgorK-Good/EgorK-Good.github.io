@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-particle-system-component@1.0.2/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
 
@@ -66,13 +66,12 @@
                     particles.setAttribute('particle-system', {
                         preset: 'custom',
                         particleCount: 100,
-                        color: '#4CC3D9',
+                        color: '#00FF00', // Зеленый цвет
                         duration: 1,
                         size: 0.1,
                         velocityValue: '0 5 0',
                         velocitySpread: '5 5 5',
-                        positionSpread: '0.5 0.5 0.5',
-                        texture: 'doski.jpg' // Используем ту же текстуру, что и для кубов
+                        positionSpread: '0.5 0.5 0.5'
                     });
                     particles.setAttribute('position', position);
                     this.el.parentNode.appendChild(particles);
