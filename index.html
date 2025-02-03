@@ -55,27 +55,6 @@
         AFRAME.registerComponent('collectible', {
             init: function () {
                 this.el.addEventListener('click', () => {
-                    // Получение позиции объекта
-                    const position = this.el.getAttribute('position');
-
-                    // Создание частиц разрушения
-                    const particles = document.createElement('a-entity');
-                    particles.setAttribute('particle-system', {
-                        preset: 'custom',
-                        particleCount: 100,
-                        color: '#00FF00', // Зеленый цвет
-                        duration: 1,
-                        size: 0.1,
-                        velocityValue: '0 5 0',
-                        velocitySpread: '5 5 5',
-                        positionSpread: '0.5 0.5 0.5',
-                        opacity: 0.8,
-                        maxAge: 1.5,
-                        texture: 'url(doski.jpg)' // Используем ту же текстуру, что и для кубов
-                    });
-                    particles.setAttribute('position', position);
-                    this.el.parentNode.appendChild(particles);
-
                     // Удаление объекта из сцены
                     this.el.setAttribute('visible', false);
 
