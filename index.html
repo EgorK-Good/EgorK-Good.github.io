@@ -14,37 +14,43 @@
       <a-light type="directional" color="#fff" intensity="0.6" position="-1 1 0"></a-light>
 
       <!-- Небо -->
-      <a-sky src=sky.png></a-sky>
+      <a-sky src="sky.png"></a-sky>
 
       <!-- Пол с текстурой -->
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" src=ret.png></a-plane>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" material="src: ret.png; repeat: 10 10;" shadow="receive: true"></a-plane>
 
       <!-- Камера и контроллер -->
-      <a-entity camera look-controls wasd-controls position="0 1.6 0">
+      <a-entity id="camera" camera look-controls wasd-controls position="0 1.6 0">
         <a-cursor color="black" fuse="true" fuse-timeout="500"></a-cursor>
       </a-entity>
       <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
       <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc"></a-entity>
 
       <!-- Объекты для сбора с текстурами -->
-      <a-box position="-6 1 -3" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
-      <a-box position="5 1 -2" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
-      <a-box position="-7 1 -1" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
-      <a-box position="8 1 -3" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
-      <a-box position="-1 1 -3" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
-      <a-box position="-2 1 -4" width="1" height="1" depth="1" src=doski.jpg collectible shadow="cast: true"></a-box>
+      <a-box position="-6 1 -3" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
+      <a-box position="5 1 -2" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
+      <a-box position="-7 1 -1" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
+      <a-box position="8 1 -3" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
+      <a-box position="-1 1 -3" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
+      <a-box position="-2 1 -4" width="1" height="1" depth="1" material="src: doski.jpg;" collectible shadow="cast: true"></a-box>
 
       <!-- Текст для отображения счета -->
-      <a-text id="score" value="Score: 0" position="-1.5 2.5 -5" color="black"></a-text>
+      <a-entity position="-1.5 2.5 -5" look-at="#camera">
+        <a-text id="score" value="Score: 0" color="black" align="center"></a-text>
+      </a-entity>
 
       <!-- Таймер -->
-      <a-text id="timer" value="Time: 30" position="1.5 2.5 -5" color="black"></a-text>
+      <a-entity position="1.5 2.5 -5" look-at="#camera">
+        <a-text id="timer" value="Time: 30" color="black" align="center"></a-text>
+      </a-entity>
 
       <!-- Текст для окончания игры -->
-      <a-text id="gameOverText" value="" position="-1 4 -4" color="black"></a-text>
+      <a-entity position="-1 4 -4" look-at="#camera">
+        <a-text id="gameOverText" value="" color="black" align="center"></a-text>
+      </a-entity>
 
       <!-- Звук при сборе объекта -->
-      <a-sound id="collectSound" src= wq.mp3 autoplay="false"></a-sound>
+      <a-sound id="collectSound" src="wq.mp3" autoplay="false"></a-sound>
     </a-scene>
 
     <script>
