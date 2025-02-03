@@ -77,7 +77,7 @@
                     this.el.parentNode.appendChild(particles);
 
                     // Удаление объекта из сцены
-                    this.el.parentNode.removeChild(this.el);
+                    this.el.setAttribute('visible', false);
 
                     // Обновление счета
                     let scoreElement = document.querySelector('#score');
@@ -92,7 +92,7 @@
                     setTimeout(() => {
                         const newPosition = getRandomPosition();
                         this.el.setAttribute('position', newPosition);
-                        this.el.parentNode.appendChild(this.el);
+                        this.el.setAttribute('visible', true);
                     }, 1000); // Задержка в 1 секунду перед перемещением
                 });
             }
