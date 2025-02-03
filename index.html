@@ -72,7 +72,7 @@
                         velocityValue: '0 5 0',
                         velocitySpread: '5 5 5',
                         positionSpread: '0.5 0.5 0.5',
-                        texture: 'url(https://aframe.io/aframe/examples/boilerplate/particles/particle.png)'
+                        texture: 'url(doski.jpg)' // Используем ту же текстуру, что и для кубов
                     });
                     particles.setAttribute('position', position);
                     this.el.parentNode.appendChild(particles);
@@ -88,9 +88,23 @@
                     // Воспроизведение звука
                     const sound = document.querySelector('#collectSound');
                     sound.components.sound.playSound();
+
+                    // Перемещение объекта в случайное место
+                    setTimeout(() => {
+                        const newPosition = getRandomPosition();
+                        this.el.setAttribute('position', newPosition);
+                        this.el.parentNode.appendChild(this.el);
+                    }, 1000); // Задержка в 1 секунду перед перемещением
                 });
             }
         });
+
+        function getRandomPosition() {
+            const x = Math.random() * 10 - 5; // Случайное значение от -5 до 5
+            const y = Math.random() * 2 + 1; // Случайное значение от 1 до 3
+            const z = Math.random() * 10 - 5; // Случайное значение от -5 до 5
+            return `${x} ${y} ${z}`;
+        }
 
         let timeLeft = 30; // Время игры в секундах
         let timerElement = document.querySelector('#timer');
