@@ -69,7 +69,10 @@
                         size: 0.1,
                         velocityValue: '0 5 0',
                         velocitySpread: '5 5 5',
-                        positionSpread: '0.5 0.5 0.5'
+                        positionSpread: '0.5 0.5 0.5',
+                        opacity: 0.8,
+                        maxAge: 1.5,
+                        texture: 'url(https://aframe.io/aframe/examples/boilerplate/particles/particle.png)'
                     });
                     particles.setAttribute('position', position);
                     this.el.parentNode.appendChild(particles);
@@ -121,6 +124,12 @@
             let finalScore = parseInt(document.querySelector('#score').getAttribute('value').split(': ')[1]);
             let gameOverText = document.querySelector('#gameOverText');
             gameOverText.setAttribute('value', 'Game Over! Your final score is: ' + finalScore);
+
+            // Удаление всех кубов
+            const collectibles = document.querySelectorAll('[collectible]');
+            collectibles.forEach(collectible => {
+                collectible.setAttribute('visible', false);
+            });
 
             // Перезапуск игры (можно убрать, если не нужно)
             // location.reload();
