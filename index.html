@@ -6,6 +6,7 @@
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ammo.js@0.0.1/builds/ammo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-particle-system-component@1.0.2/dist/aframe-particle-system-component.min.js"></script>
   </head>
   <body>
 
@@ -47,6 +48,23 @@
         AFRAME.registerComponent('collectible', {
             init: function () {
                 this.el.addEventListener('click', () => {
+                    // Получение позиции объекта
+                    const position = this.el.getAttribute('position');
+
+                    // Создание частиц разрушения
+                    const particles = document.createElement('a-entity');
+                    particles.setAttribute('particle-system', {
+                        preset: 'snow',
+                        particleCount: 100,
+                        color: '#4CC3D9',
+                        duration: 1,
+                        size: 0.1,
+                        velocityValue: '0 5 0',
+                        positionSpread: '0.5 0.5 0.5'
+                    });
+                    particles.setAttribute('position', position);
+                    this.el.parentNode.appendChild(particles);
+
                     // Удаление объекта из сцены
                     this.el.parentNode.removeChild(this.el);
 
@@ -83,4 +101,5 @@
     </script>
   </body>
 </html>
+
 
