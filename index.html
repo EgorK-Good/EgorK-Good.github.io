@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>VR Mini Game</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
 
@@ -72,7 +71,7 @@
                         positionSpread: '0.5 0.5 0.5',
                         opacity: 0.8,
                         maxAge: 1.5,
-                        texture: 'doski.jpg'
+                        texture: 'url(doski.jpg)' // Используем ту же текстуру, что и для кубов
                     });
                     particles.setAttribute('position', position);
                     this.el.parentNode.appendChild(particles);
